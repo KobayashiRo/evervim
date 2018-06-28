@@ -54,6 +54,7 @@ class EvervimEditor(object):
         pref = EvervimPref.getInstance()
         if EvervimPref.getInstance().devtoken is None:
             raise AttributeError("devtoken must be set!!")
+        
         self.api = EvernoteAPI('S=s72:U=dd4c83:E=16b968d716f:C=1643edc43a0:P=1cd:A=en-devtoken:V=2:H=3112905fcbf73376faa5fd27838d5f4d')
 
     def note2buffer(self, note):

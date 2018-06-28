@@ -147,13 +147,8 @@ class Evervimmer(object):
     def listTags(self):  # {{{
         Evervimmer.tags = Evervimmer.editor.api.listTags()
         sortOpt = vim.eval('g:evervim_sorttags').split()
-        if sortOpt[1] == 'asc':
-            Evervimmer.tags.sort(lambda a, b: cmp(getattr(a, sortOpt[0]),
-                                               getattr(b, sortOpt[0])))
-        else:
-            Evervimmer.tags.sort(lambda a, b: cmp(getattr(b, sortOpt[0]),
-                                               getattr(a, sortOpt[0])))
-
+     
+        sorted(Evervimmer.notebooks, key = attrgetter(sortOpt[0]),reverse = True if  sortOpt[1] == "asc" else False)
         strs = [self.__changeEncodeToBuffer(tag.name) for tag in Evervimmer.tags]
         self.__setBufferList(strs, " [all tags]")
     #}}}
@@ -304,7 +299,7 @@ class Evervimmer(object):
         subprocess.Popen(self.pref.enscriptpath + " showNotes /q intitle:\"%s\"" % title_sjis)
     #}}}
 
-    def __setBufferList(self, buffertitlelist, title):  # {{{
+    def __setBufferList(self, buffertitlelist, title, index = 1):  # {{{
         vim.current.buffer[:] = None   # clear buffer
         vim.current.buffer[0] = title  # remove empty line(line 1)
         for bufline in buffertitlelist:  # 一括だとMemoryError
