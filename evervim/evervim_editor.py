@@ -15,15 +15,14 @@ class EvervimPref(object):
     def __init__(self):
         if EvervimPref._instance is not None:
             raise RuntimeError("EvervimPref must be one object!!!")
-
-        self.workdir              = None
-        self.devtoken             = None
-        self.sortnotebooks        = None
-        self.sorttags             = None
-        self.xmlindent            = None
-        self.usemarkdown          = None
-        self.encoding             = None
-        self.asyncupdate          = None
+        self.workdir              = vim.eval("g:evervim_workdir")
+        self.devtoken             = vim.eval("g:evervim_devtoken")
+        self.sortnotebooks        = vim.eval("g:evervim_sortnotebooks")
+        self.sorttags             = vim.eval("g:evervim_sorttags")
+        self.xmlindent            = vim.eval("g:evervim_xmlindent")
+        self.usemarkdown          = vim.eval("g:evervim_usemarkdown")
+        self.asyncupdate          = vim.eval("g:evervim_asyncupdate")
+        self.encoding             = vim.eval('&enc')
         self.enscriptpath         = None
 
     @classmethod
@@ -55,7 +54,7 @@ class EvervimEditor(object):
         if EvervimPref.getInstance().devtoken is None:
             raise AttributeError("devtoken must be set!!")
         
-        self.api = EvernoteAPI('S=s72:U=dd4c83:E=16b968d716f:C=1643edc43a0:P=1cd:A=en-devtoken:V=2:H=3112905fcbf73376faa5fd27838d5f4d')
+        self.api = EvernoteAPI(self.devtoken)
 
     def note2buffer(self, note):
         """ return strings array for buffer from note. """
