@@ -14,7 +14,7 @@ function! evervim#logincheck() " {{{
     python3 << EOF
 try:
     Evervimmer.getInstance().auth()
-    print 'login successful.'
+    print('login successful.')
 except:
     raise StandardError("login error")
 EOF
@@ -282,7 +282,7 @@ endfunction
 try
 python3 << EOF
 import sys,os,vim
-sys.path.append(os.path.join(vim.eval('expand("<sfile>:p:h")'),'../plugin/py/'))
+sys.path.append(os.path.join(vim.eval('expand("<sfile>:p:h")'),'../plugin/evervim/'))
 from evervimmer import Evervimmer
 EOF
 catch
